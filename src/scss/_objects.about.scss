@@ -1,0 +1,13 @@
+.about-page--team-member {
+  max-width: 90px;
+}
+
+.about-page--team {
+  @media screen and (max-width: 935px) {
+    flex-wrap: wrap;
+  }
+}
+
+.about-page--section {
+  max-width: 660px;
+}
