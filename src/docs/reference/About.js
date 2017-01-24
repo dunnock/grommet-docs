@@ -83,7 +83,7 @@ export default class About extends Component {
             Hewlett Packard, and taking a note from our own 
             founders, Dave and Bill, we shared it with the 
             open source community with great response. As 
-            with any company, change is inevitabe, 
+            with any company, change is inevitable, 
             and change it did…Hewlett Packard became 
             two companies. The split became proof that 
             Grommet was not only a valuable tool 
