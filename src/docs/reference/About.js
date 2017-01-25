@@ -11,6 +11,7 @@ import SocialTwitterIcon from 'grommet/components/icons/base/SocialTwitter';
 import SocialGithubIcon from 'grommet/components/icons/base/SocialGithub';
 import Menu from 'grommet/components/Menu';
 import Anchor from 'grommet/components/Anchor';
+import { smallSize } from 'grommet/utils/Responsive';
 
 const teamMembers = [
   {
@@ -47,11 +48,43 @@ const teamMembers = [
 
 export default class About extends Component {
 
+  constructor() {
+    super();
+    this._onResize = this._onResize.bind(this);
+    this.state = {
+      responsive: false
+    };
+  }
+
+  componentDidMount() {
+    if (window) {
+      window.addEventListener('resize', this._onResize);
+    }
+  }
+
+  componentWillUnmount() {
+    if (window) {
+      window.removeEventListener('resize', this._onResize);
+    }
+  }
+
+  _onResize() {
+    // ref to component was not being passed 
+    // to the surrounding dom element, hence the getElementById
+    const sectionElement = document.getElementById('main-section');
+    if (sectionElement) {
+      const responsive = sectionElement.offsetWidth < smallSize();
+      this.setState({
+        responsive
+      });
+    }
+  }
+
   render () {
     return (
       <DocsArticle title='About'>
 
-        <Section>
+        <Section id="main-section">
           <Paragraph size="large">
             Grommet came to the world from four individuals inside
             Hewlett Packard that wanted to make designing a modern
@@ -95,8 +128,8 @@ export default class About extends Component {
           </Paragraph>
         </Section>
 
-        <Section className="about-page--section">
-          <Heading tag="h2" align="center" strong pad="medium">
+        <Section size={{ width: { max: "xlarge" } }}>
+          <Heading tag="h2" align="center" strong>
             Our Team
           </Heading>
           <Box
@@ -105,20 +138,20 @@ export default class About extends Component {
             align="center"
             pad={{ vertical: "medium" }}
             responsive={false}
-            className="about-page--team"
+            wrap={this.state.responsive}
           >
             {teamMembers.map((member, i) =>
               <Box
                 key={i}
                 margin="small"
                 align="center"
-                className="about-page--team-member"
+                size="xsmall"
               >
                 <Image
                   size="small"
                   src={member.avatar}
                 />
-                <Heading align="center" tag="h4">
+                <Heading align="center" tag="h4" style={{ maxWidth: 90 }}>
                   {member.name}
                 </Heading>
                 <Menu responsive={false} inline align="center">
