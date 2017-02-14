@@ -10,7 +10,6 @@ import InteractiveExample from '../../../components/InteractiveExample';
 const PROPS_SCHEMA = {
   type: { options: ['bar', 'arc', 'circle', 'spiral'] },
   vertical: { value: true },
-  label: { value: <Value value={40} units='GB' /> },
   series: { value: [
     {label: 'Gen 7', value: 50, onClick: () => alert('50')},
     {label: 'Gen 8', value: 1, onClick: () => alert('1')},
@@ -19,7 +18,8 @@ const PROPS_SCHEMA = {
   ] },
   stacked: { value: true },
   threshold: { value: 90 },
-  size: { options: ['small', 'medium', 'large'] }
+  label: { value: true },
+  size: { options: ['xsmall', 'small', 'medium', 'large'] }
 };
 
 const CONTENTS_SCHEMA = {
@@ -66,7 +66,7 @@ export default class MeterExamplesDoc extends Component {
       delete props.vertical;
       delete propsSchema.vertical;
       delete contentsSchema.value;
-      if (props.series) {
+      if (props.series && ! props.stacked) {
         delete props.label;
         delete propsSchema.label;
       }
@@ -80,6 +80,10 @@ export default class MeterExamplesDoc extends Component {
       delete propsSchema.threshold;
       delete contentsSchema.value;
       props.series = PROPS_SCHEMA.series.value;
+    }
+
+    if (props.label) {
+      props.label = <Value value={40} units='GB' size={props.size} />;
     }
 
     let element = (
@@ -173,7 +177,7 @@ export default class MeterExamplesDoc extends Component {
         );
       }
       element = (
-        <Box direction={vertical ? 'row' : 'column'}
+        <Box direction={vertical ? 'row' : 'column'} responsive={false}
           align={(vertical && limits) ? 'stretch' : 'center'}
           pad={vertical ? {'between': 'small'} : undefined}>
           {element}
