@@ -1,6 +1,7 @@
 // (C) Copyright 2014-2016 Hewlett Packard Enterprise Development LP
 
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import DocsArticle from '../../components/DocsArticle';
 import Paragraph from 'grommet/components/Paragraph';
 import Section from 'grommet/components/Section';
@@ -69,9 +70,7 @@ export default class About extends Component {
   }
 
   _onResize() {
-    // ref to component was not being passed 
-    // to the surrounding dom element, hence the getElementById
-    const sectionElement = document.getElementById('main-section');
+    const sectionElement = findDOMNode(this.refs.mainSection);
     if (sectionElement) {
       const responsive = sectionElement.offsetWidth < smallSize();
       this.setState({
@@ -84,7 +83,7 @@ export default class About extends Component {
     return (
       <DocsArticle title='About'>
 
-        <Section id="main-section">
+        <Section ref="mainSection">
           <Paragraph size="large">
             Grommet came to the world from four individuals inside
             Hewlett Packard that wanted to make designing a modern
@@ -141,33 +140,17 @@ export default class About extends Component {
             wrap={this.state.responsive}
           >
             {teamMembers.map((member, i) =>
-              <Box
-                key={i}
-                margin="small"
-                align="center"
-                size="xsmall"
-              >
-                <Image
-                  size="small"
-                  src={member.avatar}
-                />
+              <Box key={i} margin="small" align="center" size="xsmall">
+                <Image size="small" src={member.avatar} />
                 <Heading align="center" tag="h4" style={{ maxWidth: 90 }}>
                   {member.name}
                 </Heading>
                 <Menu responsive={false} inline align="center">
-                  <Anchor
-                    href={member.twitter}
-                    icon={
-                      <SocialTwitterIcon
-                        colorIndex="plain"
-                        size="small"
-                      />
-                    }
-                  />
-                  <Anchor
-                    href={member.github}
-                    icon={<SocialGithubIcon size="small" />}
-                  />
+                  <Anchor href={member.twitter}
+                    icon={<SocialTwitterIcon
+                      colorIndex="plain" size="small" />} />
+                  <Anchor href={member.github}
+                    icon={<SocialGithubIcon size="small" />} />
                 </Menu>
               </Box>
             )}
