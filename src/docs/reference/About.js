@@ -131,14 +131,9 @@ export default class About extends Component {
           <Heading tag="h2" align="center" strong>
             Our Team
           </Heading>
-          <Box
-            direction="row"
-            justify="center"
-            align="center"
-            pad={{ vertical: "medium" }}
-            responsive={false}
-            wrap={this.state.responsive}
-          >
+          <Box direction="row" justify="center" align="center"
+            pad={{ vertical: "medium" }} responsive={false} 
+            wrap={this.state.responsive}>
             {teamMembers.map((member, i) =>
               <Box key={i} margin="small" align="center" size="xsmall">
                 <Image size="small" src={member.avatar} />
